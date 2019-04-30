@@ -13,7 +13,7 @@ public:
 	EyetrackingPrototype(sf::Window *originalWindow);
 	~EyetrackingPrototype();
 
-	void readKeys();
+	void controlCamera(float dt);
 
 	void update(float dt);
 };

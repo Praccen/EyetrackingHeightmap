@@ -20,52 +20,49 @@ EyetrackingPrototype::~EyetrackingPrototype() {
 	delete m_heightmap;
 }
 
-void EyetrackingPrototype::readKeys() {
-	glm::vec3 newCamPos = m_camera->getPosition();
-	// ZOOM
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
-		m_camera->setPosition(m_camera->getPosition() + m_camera->getDirection());
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E)) {
-		m_camera->setPosition(m_camera->getPosition() - m_camera->getDirection());
-	}
-	// MOVE
+void EyetrackingPrototype::controlCamera(float dt) {
+	glm::vec3 newCamDir = m_camera->getDirection();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
-		newCamPos.z -= 1.0f;
-		m_camera->setPosition(newCamPos);
+		m_camera->setPosition(m_camera->getPosition() + glm::normalize(glm::vec3(m_camera->getDirection().x, 0.0f, m_camera->getDirection().z)) * 10.0f * dt);
 	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
-		newCamPos.z += 1.0f;
-		m_camera->setPosition(newCamPos);
+		m_camera->setPosition(m_camera->getPosition() - glm::normalize(glm::vec3(m_camera->getDirection().x, 0.0f, m_camera->getDirection().z)) * 10.0f * dt);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-		newCamPos.x -= 1.0f;
-		m_camera->setPosition(newCamPos);
-	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-		newCamPos.x += 1.0f;
-		m_camera->setPosition(newCamPos);
+		m_camera->setPosition(m_camera->getPosition() + glm::normalize(glm::cross(m_camera->getDirection(), glm::vec3(0.0f, 1.0f, 0.0f))) * 10.0f * dt);
 	}
-	// ROTATE
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up)) {
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+		m_camera->setPosition(m_camera->getPosition() - glm::normalize(glm::cross(m_camera->getDirection(), glm::vec3(0.0f, 1.0f, 0.0f))) * 10.0f * dt);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down)) {
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E)) {
+		m_camera->setPosition(m_camera->getPosition() + glm::vec3(0.0f, 1.0f, 0.0f) * 10.0f * dt);
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
+		m_camera->setPosition(m_camera->getPosition() - glm::vec3(0.0f, 1.0f, 0.0f) * 10.0f * dt);
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up) && m_camera->getDirection().y < 0.95) {
+		m_camera->setDirection(glm::rotate(m_camera->getDirection(), 1.57f * dt, glm::cross(m_camera->getDirection(), glm::vec3(0.0f, 1.0f, 0.0f))));
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down) && m_camera->getDirection().y > -0.95) {
+		m_camera->setDirection(glm::rotate(m_camera->getDirection(), -1.57f * dt, glm::cross(m_camera->getDirection(), glm::vec3(0.0f, 1.0f, 0.0f))));
+	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right)) {
-
+		m_camera->setDirection(glm::rotate(m_camera->getDirection(), -1.57f * dt, glm::vec3(0.0f, 1.0f, 0.0f)));
 	}
 
-	// PRINT current pos
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
-		std::cout << "X: " << m_camera->getPosition().x << "   Y:" << m_camera->getPosition().y << "   Z:" << m_camera->getPosition().z << std::endl;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left)) {
+		m_camera->setDirection(glm::rotate(m_camera->getDirection(), 1.57f * dt, glm::vec3(0.0f, 1.0f, 0.0f)));
 	}
 }
 
 void EyetrackingPrototype::update(float dt) {
-	readKeys();
+	controlCamera(dt);
 }
