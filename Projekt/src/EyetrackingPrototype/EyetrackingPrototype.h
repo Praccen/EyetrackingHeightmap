@@ -9,6 +9,7 @@ private:
 	DirectionalLight* m_directionalLight;
 	Heightmap* m_heightmap;
 
+
 public:
 	EyetrackingPrototype(sf::Window *originalWindow);
 	~EyetrackingPrototype();
