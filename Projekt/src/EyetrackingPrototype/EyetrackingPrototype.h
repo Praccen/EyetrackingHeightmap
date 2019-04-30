@@ -9,7 +9,6 @@ private:
 	DirectionalLight* m_directionalLight;
 	Heightmap* m_heightmap;
 
-	glm::vec2 m_position;
 
 public:
 	EyetrackingPrototype(sf::Window *originalWindow);
