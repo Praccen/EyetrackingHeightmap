@@ -78,6 +78,9 @@
     <ClCompile Include="src\EyetrackingPrototype\Heightmap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\EyetrackingPrototype\Menu\Menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\Graphics\Camera\Camera.h">
@@ -137,5 +140,12 @@
     <ClInclude Include="src\EyetrackingPrototype\Heightmap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\EyetrackingPrototype\Menu\Menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\Shaders\Text_Shader_Vertex.glsl" />
+    <None Include="res\Shaders\Text_Shader_Frag.glsl" />
   </ItemGroup>
 </Project>

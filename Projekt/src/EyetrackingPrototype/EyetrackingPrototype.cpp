@@ -13,6 +13,9 @@ EyetrackingPrototype::EyetrackingPrototype(sf::Window * originalWindow) : Applic
 	m_directionalLight->setDirection(glm::vec3(0.0f, -1.0f, 1.1f));
 	m_directionalLight->setAmbientMultiplier(0.15f);
 
+	menu_shader = Application::getMenuShader();
+	menu.Init();
+
 	m_heightmap = new Heightmap();
 }
 
@@ -21,5 +24,5 @@ EyetrackingPrototype::~EyetrackingPrototype() {
 }
 
 void EyetrackingPrototype::update(float dt) {
-
+	menu.RenderRealtimeMenu(menu_shader);
 }

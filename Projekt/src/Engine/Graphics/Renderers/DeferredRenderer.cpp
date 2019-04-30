@@ -23,6 +23,7 @@ DeferredRenderer::DeferredRenderer(sf::Window *originalWindow, Scene *scene) {
 	m_gBufferShaders = new ShaderSet("geometryPass_Vertex.glsl", "geometryPass_Frag.glsl", "BackfaceCulling_Geometry.glsl");
 	m_shadowShaders = new ShaderSet("shadowPass_Vertex.glsl", "shadowPass_Frag.glsl");
 	m_lightingShaders = new ShaderSet("lightingPass_Vertex.glsl", "lightingPass_Frag.glsl");
+	m_menuShaders = new ShaderSet("Text_Shader_Vertex.glsl", "Text_Shader_Frag.glsl");
 
 	//Create buffers
 	m_gBufferShaders->use();
@@ -51,6 +52,7 @@ DeferredRenderer::~DeferredRenderer() {
 	delete m_lightingShaders;
 	delete m_shadowShaders;
 	delete m_gBufferShaders;
+	delete m_menuShaders;
 }
 
 void DeferredRenderer::createGBuffer() {
@@ -128,6 +130,10 @@ void DeferredRenderer::createShadowBuffer() {
 		std::cout << "Shadow Buffer not complete!" << std::endl;
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+ShaderSet* DeferredRenderer::getMenuPointer() const {
+	return m_menuShaders;
 }
 
 void DeferredRenderer::draw() {

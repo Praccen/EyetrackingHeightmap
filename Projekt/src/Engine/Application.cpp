@@ -31,4 +31,7 @@ Camera* Application::getCamera() {
 DirectionalLight* Application::getDirectionalLight() {
 	return m_scene.getDirectionalLight();
 }
+ShaderSet * Application::getMenuShader() const {
+	return m_deferredRenderer->getMenuPointer();
+}
 //-----------------------------------------------------------------

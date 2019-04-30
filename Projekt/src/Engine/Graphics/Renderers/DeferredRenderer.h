@@ -22,6 +22,7 @@ private:
 	Scene *m_scene;
 
 	//Shader sets needed
+	ShaderSet* m_menuShaders;
 	ShaderSet* m_gBufferShaders;
 	ShaderSet* m_shadowShaders;
 	ShaderSet* m_lightingShaders;
@@ -66,5 +67,7 @@ public:
 	DeferredRenderer(sf::Window *originalWindow,  Scene *scene);
 	~DeferredRenderer();
 	
+	ShaderSet* getMenuPointer() const;
+
 	void draw();
 };

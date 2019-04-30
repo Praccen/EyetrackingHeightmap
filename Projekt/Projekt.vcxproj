@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\EyetrackingPrototype\Menu\Menu.cpp" />
     <ClCompile Include="src\Engine\Application.cpp" />
     <ClCompile Include="src\engine\Graphics\Camera\Camera.cpp" />
     <ClCompile Include="src\Engine\Graphics\Geometry\Model loading\ModelHandler.cpp" />
@@ -41,6 +42,7 @@
     <ClCompile Include="src\engine\Graphics\Shader compilation\ShaderSet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\EyetrackingPrototype\Menu\Menu.h" />
     <ClInclude Include="src\Engine\Application.h" />
     <ClInclude Include="src\engine\Graphics\Camera\Camera.h" />
     <ClInclude Include="src\Engine\Graphics\Geometry\Model loading\ModelHandler.h" />
@@ -60,6 +62,10 @@
     <ClInclude Include="src\Engine\Scene.h" />
     <ClInclude Include="src\EyetrackingPrototype\EyetrackingPrototype.h" />
     <ClInclude Include="src\EyetrackingPrototype\Heightmap.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\Shaders\Text_Shader_Frag.glsl" />
+    <None Include="res\Shaders\Text_Shader_Vertex.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F11BA607-123C-4222-8609-5E919D8FD7D8}</ProjectGuid>

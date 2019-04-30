@@ -22,6 +22,8 @@ public:
 	static Camera* getCamera();
 	static DirectionalLight* getDirectionalLight();
 
+	ShaderSet* getMenuShader() const;
+
 	void updateEngine(float dt);
 	void draw();
 
