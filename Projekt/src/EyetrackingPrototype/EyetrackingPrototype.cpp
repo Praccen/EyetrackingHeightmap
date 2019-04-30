@@ -4,8 +4,8 @@ EyetrackingPrototype::EyetrackingPrototype(sf::Window * originalWindow) : Applic
 	//Camera
 	m_camera = Application::getCamera();
 	m_camera->setFOV(65.0);
-	m_camera->setPosition(glm::vec3(50.0f, 30.0f, 65.0f));
-	m_camera->setDirection(glm::vec3(0.0f, -1.0f, -0.5f));
+	m_camera->setPosition(glm::vec3(50.0f, 40.0f, -20.0f));
+	m_camera->setDirection(glm::vec3(0.0f, -1.0f, 1.0f));
 
 	//Directional light
 	m_directionalLight = Application::getDirectionalLight();
