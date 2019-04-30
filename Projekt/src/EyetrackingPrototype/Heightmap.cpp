@@ -24,12 +24,38 @@ Heightmap::~Heightmap() {
 
 }
 
-void Heightmap::raiseGround(glm::vec2 heightmapCoords) {
-	
+void Heightmap::raiseGround(glm::vec2 heightmapCoords, float amount, float radius) {
+	for (int i = std::max((int)floor(heightmapCoords.x - radius), 0); i < std::min((int)ceil(heightmapCoords.x + radius) + 1, m_heightmapSize.x); i++) {
+		for (int j = std::max((int)floor(heightmapCoords.y - radius), 0); j < std::min((int)ceil(heightmapCoords.y + radius) + 1, m_heightmapSize.y); j++) {
+			std::vector<glm::vec3> tempPositions = m_ground->getPlane()->getTilePositions(glm::ivec2(i, j));
+			for (int k = 0; k < tempPositions.size(); k++) {
+				float tempLength = glm::length(glm::vec2(tempPositions[k].x, tempPositions[k].z) - heightmapCoords);
+				if (tempLength <= radius) {
+					tempPositions[k].y += amount * std::cos((tempLength / radius) * 1.57f);
+				}
+			}
+			m_ground->getPlane()->setTilePositions(glm::ivec2(i, j), tempPositions[0], tempPositions[1], tempPositions[2], tempPositions[3]);
+		}
+	}
+
+	m_ground->getPlane()->updateBuffers();
 }
 
-void Heightmap::lowerGround(glm::vec2 heightmapCoords) {
+void Heightmap::lowerGround(glm::vec2 heightmapCoords, float amount, float radius) {
+	for (int i = std::max((int)floor(heightmapCoords.x - radius), 0); i < std::min((int)ceil(heightmapCoords.x + radius) + 1, m_heightmapSize.x); i++) {
+		for (int j = std::max((int)floor(heightmapCoords.y - radius), 0); j < std::min((int)ceil(heightmapCoords.y + radius) + 1, m_heightmapSize.y); j++) {
+			std::vector<glm::vec3> tempPositions = m_ground->getPlane()->getTilePositions(glm::ivec2(i, j));
+			for (int k = 0; k < tempPositions.size(); k++) {
+				float tempLength = glm::length(glm::vec2(tempPositions[k].x, tempPositions[k].z) - heightmapCoords);
+				if (tempLength <= radius) {
+					tempPositions[k].y -= amount * std::cos((tempLength / radius) * 1.57f);
+				}
+			}
+			m_ground->getPlane()->setTilePositions(glm::ivec2(i, j), tempPositions[0], tempPositions[1], tempPositions[2], tempPositions[3]);
+		}
+	}
 
+	m_ground->getPlane()->updateBuffers();
 }
 
 void Heightmap::paintGround(glm::vec2 heightmapCoords, int material, float radius) {

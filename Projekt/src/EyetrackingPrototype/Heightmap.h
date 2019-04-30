@@ -13,8 +13,8 @@ public:
 	Heightmap();
 	~Heightmap();
 
-	void raiseGround(glm::vec2 heightmapCoords);
-	void lowerGround(glm::vec2 heightmapCoords);
+	void raiseGround(glm::vec2 heightmapCoords, float amount, float radius);
+	void lowerGround(glm::vec2 heightmapCoords, float amount, float radius);
 
 	void paintGround(glm::vec2 heightmapCoords, int material, float radius);
 
