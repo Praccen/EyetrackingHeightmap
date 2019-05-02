@@ -11,4 +11,5 @@ public:
 	Heightmap();
 	~Heightmap();
 
+	glm::vec2 calculateMousePos(glm::vec3 mouseRay, glm::vec3 cameraPos) const;
 };
