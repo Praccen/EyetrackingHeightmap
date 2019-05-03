@@ -13,6 +13,7 @@ public:
 	Heightmap();
 	~Heightmap();
 
+	glm::vec2 calculateMousePos(glm::vec3 mouseRay, glm::vec3 cameraPos) const;
 	void raiseGround(glm::vec2 heightmapCoords, float amount, float radius);
 	void lowerGround(glm::vec2 heightmapCoords, float amount, float radius);
 
