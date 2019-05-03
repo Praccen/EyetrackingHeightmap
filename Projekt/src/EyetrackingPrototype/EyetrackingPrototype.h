@@ -11,7 +11,6 @@ private:
 	Heightmap* m_heightmap;
 	sf::Window* m_window;
 
-
 public:
 	EyetrackingPrototype(sf::Window *originalWindow);
 	~EyetrackingPrototype();
