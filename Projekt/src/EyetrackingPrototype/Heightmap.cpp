@@ -60,9 +60,28 @@ void Heightmap::lowerGround(glm::vec2 heightmapCoords, float amount, float radiu
 }
 
 void Heightmap::paintGround(glm::vec2 heightmapCoords, int material, float radius) {
+	float heightWhereLooking = m_ground->getPlane()->getTilePositions(heightmapCoords)[0].y;
+
 	for (int i = std::max((int)floor(heightmapCoords.x - radius), 0); i < std::min((int)round(heightmapCoords.x + radius) + 1, m_heightmapSize.x); i++) {
 		for (int j = std::max((int)floor(heightmapCoords.y - radius), 0); j < std::min((int)round(heightmapCoords.y + radius) + 1, m_heightmapSize.y); j++) {
-			if (glm::length(glm::vec2((float)i + 0.5, (float)j + 0.5) - heightmapCoords) <= radius) {
+			if (material == 4) { //Water
+				//Flatten the ground
+				std::vector<glm::vec3> tempPositions = m_ground->getPlane()->getTilePositions(glm::ivec2(i, j));
+				for (int k = 0; k < tempPositions.size(); k++) {
+					float tempLength = glm::length(glm::vec2(tempPositions[k].x, tempPositions[k].z) - heightmapCoords);
+					if (tempLength <= radius) {
+						tempPositions[k].y = heightWhereLooking;
+					}
+				}
+				m_ground->getPlane()->setTilePositions(glm::ivec2(i, j), tempPositions[0], tempPositions[1], tempPositions[2], tempPositions[3]);
+		
+				//Paint water
+				if (glm::length(glm::vec2((float)i + 0.5, (float)j + 0.5) - heightmapCoords) <= radius-1) {
+					m_ground->getPlane()->setUvCoords(glm::ivec2(i, j), glm::vec2(material * 0.2, 0.0), glm::vec2((material + 1) * 0.2, 1.0));
+				}
+			}
+			else if (glm::length(glm::vec2((float)i + 0.5, (float)j + 0.5) - heightmapCoords) <= radius) { //Every other material
+				//Paint the ground
 				m_ground->getPlane()->setUvCoords(glm::ivec2(i, j), glm::vec2(material * 0.2, 0.0), glm::vec2((material + 1) * 0.2, 1.0));
 			}
 		}
@@ -71,11 +90,11 @@ void Heightmap::paintGround(glm::vec2 heightmapCoords, int material, float radiu
 	m_ground->getPlane()->updateBuffers();
 }
 
-glm::vec2 Heightmap::calculateMousePos(glm::vec3 mouseRay, glm::vec3 cameraPos) const{
+glm::vec2 Heightmap::calculateMousePos(glm::vec3 mouseRay, glm::vec3 cameraPos) const {
 
 	float length = 10000.f;
 	glm::vec2 pos = glm::vec2(-1.f, -1.f);
-	
+
 
 	//Calculate the intersection and select the closest
 	for (int i = 0; i < 100; i++) {
@@ -85,7 +104,7 @@ glm::vec2 Heightmap::calculateMousePos(glm::vec3 mouseRay, glm::vec3 cameraPos) 
 			float tempLength = Intersections::rayTriTest(cameraPos, mouseRay, tileArray);
 			glm::vec3 tileArray2[3] = { tile[1], tile[3], tile[2] };
 			float tempLength2 = Intersections::rayTriTest(cameraPos, mouseRay, tileArray2);
-			if(tempLength != -1.f){
+			if (tempLength != -1.f) {
 				if (tempLength < length) {
 					length = tempLength;
 				}
@@ -105,7 +124,7 @@ glm::vec2 Heightmap::calculateMousePos(glm::vec3 mouseRay, glm::vec3 cameraPos) 
 		pos.y = tempPos.z;
 	}
 
-	
+
 	return pos;
 
 
