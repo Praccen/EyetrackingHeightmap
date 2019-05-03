@@ -70,7 +70,6 @@ void Heightmap::paintGround(glm::vec2 heightmapCoords, int material, float radiu
 
 	m_ground->getPlane()->updateBuffers();
 }
-}
 
 glm::vec2 Heightmap::calculateMousePos(glm::vec3 mouseRay, glm::vec3 cameraPos) const{
 

@@ -25,6 +25,25 @@ EyetrackingPrototype::~EyetrackingPrototype() {
 	delete m_heightmap;
 }
 
+glm::vec2 EyetrackingPrototype::getMousePos() {
+	//Calculate normalized device coordinates
+	glm::vec2 ndc;
+	ndc.x = ((2.f * sf::Mouse::getPosition(*m_window).x) / m_window->getSize().x) - 1.f;
+	ndc.y = 1.f - ((2.f * sf::Mouse::getPosition(*m_window).y) / m_window->getSize().y);
+
+	//Calculate normalized mouse ray in world space
+	glm::vec4 mouseRayClip = glm::vec4(ndc.x, ndc.y, -1.f, 1.f);
+	glm::vec4 mouseRayCamera = glm::inverse(m_camera->getProjection()) * mouseRayClip;
+	mouseRayCamera = glm::vec4(mouseRayCamera.x, mouseRayCamera.y, -1.f, 0.f);
+	glm::vec3 mouseRayWorld = glm::normalize(glm::vec3(glm::inverse(m_camera->getView()) * mouseRayCamera));
+
+	//Get pos on heightmap
+	glm::vec2 pos = m_heightmap->calculateMousePos(mouseRayWorld, m_camera->getPosition());
+
+
+	return pos;
+}
+
 void EyetrackingPrototype::controlCamera(float dt) {
 	glm::vec3 newCamDir = m_camera->getDirection();
 	float speed = 10.0f;
@@ -84,23 +103,49 @@ void EyetrackingPrototype::update(float dt) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X)) {
 		std::cout << getMousePos().x << ", " << getMousePos().y << std::endl;
 	}
-}
 
-glm::vec2 EyetrackingPrototype::getMousePos() {
-	//Calculate normalized device coordinates
-	glm::vec2 ndc;
-	ndc.x = ((2.f * sf::Mouse::getPosition(*m_window).x) / m_window->getSize().x) - 1.f;
-	ndc.y = 1.f - ((2.f * sf::Mouse::getPosition(*m_window).y) / m_window->getSize().y);
-	
-	//Calculate normalized mouse ray in world space
-	glm::vec4 mouseRayClip = glm::vec4(ndc.x, ndc.y, -1.f, 1.f);
-	glm::vec4 mouseRayCamera = glm::inverse(m_camera->getProjection()) * mouseRayClip;
-	mouseRayCamera = glm::vec4(mouseRayCamera.x, mouseRayCamera.y, -1.f, 0.f);
-	glm::vec3 mouseRayWorld = glm::normalize(glm::vec3(glm::inverse(m_camera->getView()) * mouseRayCamera));
-	
-	//Get pos on heightmap
-	glm::vec2 pos = m_heightmap->calculateMousePos(mouseRayWorld, m_camera->getPosition());
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1)) {
+		glm::vec2 tempMousePos = getMousePos();
+		if (tempMousePos.x != -1 && tempMousePos.y != -1) {
+			m_heightmap->paintGround(tempMousePos, 1, 2);
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num2)) {
+		glm::vec2 tempMousePos = getMousePos();
+		if (tempMousePos.x != -1 && tempMousePos.y != -1) {
+			m_heightmap->paintGround(tempMousePos, 2, 2);
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num3)) {
+		glm::vec2 tempMousePos = getMousePos();
+		if (tempMousePos.x != -1 && tempMousePos.y != -1) {
+			m_heightmap->paintGround(tempMousePos, 3, 2);
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4)) {
+		glm::vec2 tempMousePos = getMousePos();
+		if (tempMousePos.x != -1 && tempMousePos.y != -1) {
+			m_heightmap->paintGround(tempMousePos, 4, 2);
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num5)) {
+		glm::vec2 tempMousePos = getMousePos();
+		if (tempMousePos.x != -1 && tempMousePos.y != -1) {
+			m_heightmap->paintGround(tempMousePos, 0, 2);
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::O)) {
+		glm::vec2 tempMousePos = getMousePos();
+		if (tempMousePos.x != -1 && tempMousePos.y != -1) {
+			m_heightmap->lowerGround(tempMousePos, 3 * dt, 5);
+		}
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P)) {
+		glm::vec2 tempMousePos = getMousePos();
+		if (tempMousePos.x != -1 && tempMousePos.y != -1) {
+			m_heightmap->raiseGround(tempMousePos, 3 * dt, 5);
+		}
+	}
 
-
-	return pos;
+	controlCamera(dt);
 }
