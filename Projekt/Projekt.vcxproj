@@ -61,6 +61,12 @@
     <ClInclude Include="src\EyetrackingPrototype\EyetrackingPrototype.h" />
     <ClInclude Include="src\EyetrackingPrototype\Heightmap.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Tobii\API-Reference.pdf" />
+    <None Include="Tobii\SDK-License_en.pdf" />
+    <None Include="Tobii\SDK-License_zh.pdf" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F11BA607-123C-4222-8609-5E919D8FD7D8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -198,5 +204,14 @@
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Tobii.Interaction.0.7.3\build\Tobii.Interaction.targets" Condition="Exists('..\packages\Tobii.Interaction.0.7.3\build\Tobii.Interaction.targets')" />
+    <Import Project="..\packages\Tobii.StreamEngine.Native.2.2.2.363\build\Tobii.StreamEngine.Native.targets" Condition="Exists('..\packages\Tobii.StreamEngine.Native.2.2.2.363\build\Tobii.StreamEngine.Native.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Tobii.Interaction.0.7.3\build\Tobii.Interaction.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Tobii.Interaction.0.7.3\build\Tobii.Interaction.targets'))" />
+    <Error Condition="!Exists('..\packages\Tobii.StreamEngine.Native.2.2.2.363\build\Tobii.StreamEngine.Native.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Tobii.StreamEngine.Native.2.2.2.363\build\Tobii.StreamEngine.Native.targets'))" />
+  </Target>
 </Project>

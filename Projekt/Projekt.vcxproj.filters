@@ -16,6 +16,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Tobii">
+      <UniqueIdentifier>{76536b96-ebd9-4d83-8e6a-639421de5169}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -137,5 +140,17 @@
     <ClInclude Include="src\EyetrackingPrototype\Heightmap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Tobii\SDK-License_zh.pdf">
+      <Filter>Tobii</Filter>
+    </None>
+    <None Include="Tobii\SDK-License_en.pdf">
+      <Filter>Tobii</Filter>
+    </None>
+    <None Include="Tobii\API-Reference.pdf">
+      <Filter>Tobii</Filter>
+    </None>
   </ItemGroup>
 </Project>

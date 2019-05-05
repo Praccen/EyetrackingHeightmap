@@ -1,6 +1,7 @@
 #include "EyetrackingPrototype.h"
 #include "SFML/Window.hpp"
 #include <iostream>
+#include <tobii/tobii.h>
 
 EyetrackingPrototype::EyetrackingPrototype(sf::Window * originalWindow) : Application(originalWindow) {
 	//Camera
