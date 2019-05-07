@@ -6,6 +6,9 @@
 #include <SFML\OpenGL.hpp>
 //Other
 #include <iostream>
+#include <tobii/tobii.h>
+#include <tobii/tobii_streams.h>
+#include <assert.h>
 
 //Only import the game you want to run
 #include "EyetrackingPrototype/EyetrackingPrototype.h"
@@ -20,12 +23,51 @@ void SetOpenGLSettings(sf::ContextSettings &settings) {
 	settings.minorVersion = 0; //.0
 }
 
+glm::vec2 g_eyePos;
+
+void gaze_point_callback(tobii_gaze_point_t const* gaze_point, void* user_data)
+{
+	if (gaze_point->validity == TOBII_VALIDITY_VALID) {
+		/*
+		printf("Gaze point: %f, %f\n",
+			gaze_point->position_xy[0],
+			gaze_point->position_xy[1]);*/
+		g_eyePos.x = gaze_point->position_xy[0];
+		g_eyePos.y = gaze_point->position_xy[1];
+	}
+}
+
+static void url_receiver(char const* url, void* user_data)
+{
+	char* buffer = (char*)user_data;
+	if (*buffer != '\0') return; // only keep first value
+
+	if (strlen(url) < 256)
+		strcpy(buffer, url);
+}
+
 int main()
 {
 	//Memory leak detection
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	
+	//Eyetracking initialization
+	tobii_api_t* api;
+	tobii_error_t error = tobii_api_create(&api, NULL, NULL);
+	assert(error == TOBII_ERROR_NO_ERROR);
+
+	char url[256] = { 0 };
+	error = tobii_enumerate_local_device_urls(api, url_receiver, url);
+	assert(error == TOBII_ERROR_NO_ERROR && *url != '\0');
+
+	tobii_device_t* device;
+	error = tobii_device_create(api, url, &device);
+	assert(error == TOBII_ERROR_NO_ERROR);
+
+	error = tobii_gaze_point_subscribe(device, gaze_point_callback, 0);
+	assert(error == TOBII_ERROR_NO_ERROR);
+	//--------------------------
+
 	//OpenGL settings
 	sf::ContextSettings openGLSettings;
 	SetOpenGLSettings(openGLSettings);
@@ -104,8 +146,19 @@ int main()
 		maxCounter = 0;
 
 		while (updateTimer >= updateRatio) {
-			if (maxCounter >= 20)
+			if (maxCounter >= 20) {
 				break;
+			}
+
+			//Eyetracking
+			error = tobii_wait_for_callbacks(NULL, 1, &device);
+			assert(error == TOBII_ERROR_NO_ERROR || error == TOBII_ERROR_TIMED_OUT);
+
+			error = tobii_device_process_callbacks(device);
+			assert(error == TOBII_ERROR_NO_ERROR);
+
+			game.setEyePos(g_eyePos);
+			//-----------
 
 			game.update(updateRatio);
 			game.updateEngine(updateRatio);
@@ -114,6 +167,16 @@ int main()
 		}
 
 		if (maxCounter == 0) {
+			//Eyetracking
+			error = tobii_wait_for_callbacks(NULL, 1, &device);
+			assert(error == TOBII_ERROR_NO_ERROR || error == TOBII_ERROR_TIMED_OUT);
+
+			error = tobii_device_process_callbacks(device);
+			assert(error == TOBII_ERROR_NO_ERROR);
+
+			game.setEyePos(g_eyePos);
+			//-----------
+
 			game.update(updateTimer);
 			game.updateEngine(updateTimer);
 			updateTimer = 0;
@@ -128,6 +191,16 @@ int main()
 	}
 
 	//Release resource
+
+	//Eyetracking destroy
+	error = tobii_gaze_point_unsubscribe(device);
+	assert(error == TOBII_ERROR_NO_ERROR);
+
+	error = tobii_device_destroy(device);
+	assert(error == TOBII_ERROR_NO_ERROR);
+
+	error = tobii_api_destroy(api);
+	assert(error == TOBII_ERROR_NO_ERROR);
 
 	return 0;
 }

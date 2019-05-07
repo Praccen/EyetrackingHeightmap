@@ -20,6 +20,8 @@ EyetrackingPrototype::EyetrackingPrototype(sf::Window * originalWindow) : Applic
 	m_heightmap = new Heightmap();
 
 	m_window = originalWindow;
+
+	m_timer = 0.0f;
 }
 
 EyetrackingPrototype::~EyetrackingPrototype() {
@@ -29,8 +31,11 @@ EyetrackingPrototype::~EyetrackingPrototype() {
 glm::vec2 EyetrackingPrototype::getMousePos() {
 	//Calculate normalized device coordinates
 	glm::vec2 ndc;
-	ndc.x = ((2.f * sf::Mouse::getPosition(*m_window).x) / m_window->getSize().x) - 1.f;
-	ndc.y = 1.f - ((2.f * sf::Mouse::getPosition(*m_window).y) / m_window->getSize().y);
+	/*ndc.x = ((2.f * sf::Mouse::getPosition(*m_window).x) / m_window->getSize().x) - 1.f;
+	ndc.y = 1.f - ((2.f * sf::Mouse::getPosition(*m_window).y) / m_window->getSize().y);*/
+
+	ndc.x = 2.f * m_eyePos.x - 1.f;
+	ndc.y = 1.f - 2.f * m_eyePos.y;
 
 	//Calculate normalized mouse ray in world space
 	glm::vec4 mouseRayClip = glm::vec4(ndc.x, ndc.y, -1.f, 1.f);
@@ -47,10 +52,13 @@ glm::vec2 EyetrackingPrototype::getMousePos() {
 
 void EyetrackingPrototype::controlCamera(float dt) {
 	glm::vec3 newCamDir = m_camera->getDirection();
-	float speed = 20.0f;
+	float speed = 40.0f;
 
-	float x_cursor = sf::Mouse::getPosition(*m_window).x;
-	float y_cursor = sf::Mouse::getPosition(*m_window).y;
+	/*float x_cursor = sf::Mouse::getPosition(*m_window).x;
+	float y_cursor = sf::Mouse::getPosition(*m_window).y;*/
+
+	float x_cursor = m_eyePos.x * m_window->getSize().x;
+	float y_cursor = m_eyePos.y * m_window->getSize().y;
 	
 	// ----- PANNING -----
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
@@ -68,6 +76,10 @@ void EyetrackingPrototype::controlCamera(float dt) {
 		m_camera->setDirection(glm::rotate(m_camera->getDirection(), dt * 0.5f * ((y_cursor - (m_window->getSize().y / 2)) / (m_window->getSize().y / 2)), glm::cross(glm::vec3(0.0f, 1.0f, 0.0f), m_camera->getDirection())));
 		m_camera->setDirection(glm::rotate(m_camera->getDirection(), dt * -0.5f * ((x_cursor - (m_window->getSize().x / 2)) / (m_window->getSize().x / 2)), glm::vec3(0.0f, 1.0f, 0.0f)));
 	}
+}
+
+void EyetrackingPrototype::setEyePos(glm::vec2 eyePos) {
+	m_eyePos = eyePos;
 }
 
 void EyetrackingPrototype::update(float dt) {
@@ -94,7 +106,7 @@ void EyetrackingPrototype::update(float dt) {
 		}
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num4)) {
-		glm::vec2 tempMousePos = getMousePos();
+		glm::vec2 tempMousePos = getMousePos(); 
 		if (tempMousePos.x != -1 && tempMousePos.y != -1) {
 			m_heightmap->paintGround(tempMousePos, 4, 2);
 		}
@@ -118,5 +130,10 @@ void EyetrackingPrototype::update(float dt) {
 		}
 	}
 
-	controlCamera(dt);
+	if (m_timer > 0.05f) {
+		controlCamera(0.05f);
+		m_timer = 0.0f;
+	}
+
+	m_timer += dt;
 }
