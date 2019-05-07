@@ -73,7 +73,7 @@ int main()
 	SetOpenGLSettings(openGLSettings);
 
 	// create the window
-	sf::Window window(sf::VideoMode(1600, 900), "OpenGL", sf::Style::Default, openGLSettings);
+	sf::Window window(sf::VideoMode(1920, 1080), "OpenGL", sf::Style::Fullscreen, openGLSettings);
 	//window.setVerticalSyncEnabled(true);
 
 	//----Initialize the OpenGL states----

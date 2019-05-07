@@ -12,6 +12,7 @@ private:
 	sf::Window* m_window;
 
 	glm::vec2 m_eyePos;
+	glm::vec2 m_lastMousePick;
 
 	float m_timer;
 
