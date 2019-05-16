@@ -21,7 +21,7 @@ EyetrackingPrototype::EyetrackingPrototype(sf::Window * originalWindow, bool mou
 
 	m_window = originalWindow;
 
-	m_testGUIElement = Application::getNewUIElement();
+	m_testGUIElement = Application::getNewGUIElement();
 	m_testGUIElement->setTexture("res/Textures/Material.png");
 	m_testGUIElement->setPosition(glm::vec2(-0.9, -0.9));
 	m_testGUIElement->setSize(glm::vec2(0.4, 0.4));
