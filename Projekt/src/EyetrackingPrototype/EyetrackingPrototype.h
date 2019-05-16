@@ -11,6 +11,8 @@ private:
 	Heightmap* m_heightmap;
 	sf::Window* m_window;
 
+	GUIElement* m_testGUIElement;
+
 	glm::vec2 m_eyePos;
 	glm::vec2 m_lastMousePick;
 

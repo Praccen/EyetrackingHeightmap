@@ -29,6 +29,12 @@ Object* Scene::addObject() {
 	return object;
 }
 
+GUIElement* Scene::addGUIElement() {
+	GUIElement* element = new GUIElement();
+	m_GUIElements.push_back(element);
+	return element;
+}
+
 Camera* Scene::getCamera() {
 	return &m_camera;
 }
@@ -80,8 +86,14 @@ void Scene::update(float dt) {
 	m_camera.update();
 }
 
-void Scene::draw(GLuint shaderProgram) {
+void Scene::draw3D(GLuint shaderProgram) {
 	for (unsigned int i = 0; i < m_objects.size(); i++) {
 		m_objects[i]->draw(shaderProgram);
+	}
+}
+
+void Scene::drawGUI(GLuint shaderProgram) {
+	for (unsigned int i = 0; i < m_GUIElements.size(); i++) {
+		m_GUIElements[i]->draw(shaderProgram);
 	}
 }

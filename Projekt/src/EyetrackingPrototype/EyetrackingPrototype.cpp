@@ -21,6 +21,10 @@ EyetrackingPrototype::EyetrackingPrototype(sf::Window * originalWindow) : Applic
 
 	m_window = originalWindow;
 
+	m_testGUIElement = Application::getNewUIElement();
+	m_testGUIElement->setTexture("res/Textures/terrainDiffuse.png");
+
+
 	m_timer = 1.0f;
 	m_lastMousePick = glm::vec2(0.0f, 0.0f);
 }

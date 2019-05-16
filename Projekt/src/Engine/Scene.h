@@ -7,6 +7,7 @@
 #include <SFML\OpenGL.hpp>
 
 #include "Content\Object.h"
+#include "Graphics/Geometry/GUI Element/GUIElement.h"
 #include "Graphics/Camera/Camera.h"
 #include "Graphics/Lighting/DirectionalLight.h"
 
@@ -14,6 +15,7 @@ class Scene {
 private:
 	ModelHandler m_modelHandler;
 	std::vector<Object*> m_objects;
+	std::vector<GUIElement*> m_GUIElements;
 
 	Camera m_camera;
 	DirectionalLight m_directionalLight;
@@ -31,6 +33,7 @@ public:
 	~Scene();
 
 	Object* addObject();
+	GUIElement* addGUIElement();
 	Camera* getCamera();
 	DirectionalLight* getDirectionalLight();
 
@@ -40,5 +43,6 @@ public:
 	void setShadowUniforms(GLuint shaderProgram);
 	void setLightingUniforms(GLuint shaderProgram);
 	void update(float dt);
-	void draw(GLuint shaderProgram);
+	void draw3D(GLuint shaderProgram);
+	void drawGUI(GLuint shaderProgram);
 };
