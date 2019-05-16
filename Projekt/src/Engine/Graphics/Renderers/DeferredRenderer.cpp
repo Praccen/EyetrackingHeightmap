@@ -131,6 +131,7 @@ void DeferredRenderer::createShadowBuffer() {
 }
 
 void DeferredRenderer::draw() {
+	glDisable(GL_DEPTH_TEST);
 	setGeometryPass();
 	setShadowPass();
 	setLightPass();

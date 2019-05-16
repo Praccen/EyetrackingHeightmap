@@ -8,6 +8,7 @@ uniform mat4 worldMatrix;
 out vec2 texCoords;
 
 void main() {
-	texCoords = vertex_texCoords;
+	vec2 tempCoords = vec2(vertex_texCoords.x, 1.0f - vertex_texCoords.y);
+	texCoords = tempCoords;
 	gl_Position = worldMatrix * vec4(vertex_position, 1.0f);
 }

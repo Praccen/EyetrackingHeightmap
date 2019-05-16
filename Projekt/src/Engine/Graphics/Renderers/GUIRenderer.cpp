@@ -14,5 +14,7 @@ GUIRenderer::~GUIRenderer() {
 }
 
 void GUIRenderer::draw() {
+	glDisable(GL_DEPTH_TEST);
+	m_shaderSet->use();
 	m_scene->drawGUI(m_shaderSet->getShaderProgram());
 }
