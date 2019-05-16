@@ -3,7 +3,7 @@
 #include <iostream>
 #include <tobii/tobii.h>
 
-EyetrackingPrototype::EyetrackingPrototype(sf::Window * originalWindow) : Application(originalWindow) {
+EyetrackingPrototype::EyetrackingPrototype(sf::Window * originalWindow, bool mouse) : Application(originalWindow) {
 	//Camera
 	m_camera = Application::getCamera();
 	m_FOV = 45.0f;
@@ -25,6 +25,8 @@ EyetrackingPrototype::EyetrackingPrototype(sf::Window * originalWindow) : Applic
 	m_testGUIElement->setTexture("res/Textures/terrainDiffuse.png");
 
 
+	
+	m_mouse = mouse;
 	m_timer = 1.0f;
 	m_lastMousePick = glm::vec2(0.0f, 0.0f);
 }
@@ -39,11 +41,14 @@ glm::vec2 EyetrackingPrototype::getMousePos() {
 
 		//Calculate normalized device coordinates
 		glm::vec2 ndc;
-		/*ndc.x = ((2.f * sf::Mouse::getPosition(*m_window).x) / m_window->getSize().x) - 1.f;
-		ndc.y = 1.f - ((2.f * sf::Mouse::getPosition(*m_window).y) / m_window->getSize().y);*/
-
-		ndc.x = 2.f * m_eyePos.x - 1.f;
-		ndc.y = 1.f - 2.f * m_eyePos.y;
+		if (m_mouse) {
+			ndc.x = ((2.f * sf::Mouse::getPosition(*m_window).x) / m_window->getSize().x) - 1.f;
+			ndc.y = 1.f - ((2.f * sf::Mouse::getPosition(*m_window).y) / m_window->getSize().y);
+		}
+		else {
+			ndc.x = 2.f * m_eyePos.x - 1.f;
+			ndc.y = 1.f - 2.f * m_eyePos.y;
+		}
 
 		//Calculate normalized mouse ray in world space
 		glm::vec4 mouseRayClip = glm::vec4(ndc.x, ndc.y, -1.f, 1.f);
@@ -61,12 +66,17 @@ glm::vec2 EyetrackingPrototype::getMousePos() {
 void EyetrackingPrototype::controlCamera(float dt) {
 	glm::vec3 newCamDir = m_camera->getDirection();
 	float speed = 40.0f;
+	float x_cursor;
+	float y_cursor;
 
-	/*float x_cursor = sf::Mouse::getPosition(*m_window).x;
-	float y_cursor = sf::Mouse::getPosition(*m_window).y;*/
-
-	float x_cursor = m_eyePos.x * m_window->getSize().x;
-	float y_cursor = m_eyePos.y * m_window->getSize().y;
+	if (m_mouse) {
+		x_cursor = sf::Mouse::getPosition(*m_window).x;
+		y_cursor = sf::Mouse::getPosition(*m_window).y;
+	}
+	else {
+		x_cursor = m_eyePos.x * m_window->getSize().x;
+		y_cursor = m_eyePos.y * m_window->getSize().y;
+	}
 
 	// ----- PANNING -----
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
@@ -140,7 +150,8 @@ void EyetrackingPrototype::update(float dt) {
 
 	controlCamera(dt);
 
-	sf::Mouse::setPosition(sf::Vector2i(m_eyePos.x * m_window->getSize().x, m_eyePos.y * m_window->getSize().y), *m_window);
-
+	if (!m_mouse) {
+		sf::Mouse::setPosition(sf::Vector2i(m_eyePos.x * m_window->getSize().x, m_eyePos.y * m_window->getSize().y), *m_window);
+	}
 	m_timer += dt;
 }
