@@ -10,6 +10,7 @@ Application::Application(sf::Window *originalWindow) {
 
 Application::~Application() {
 	delete m_deferredRenderer;
+	delete m_GUIRenderer;
 }
 
 void Application::updateEngine(float dt) {

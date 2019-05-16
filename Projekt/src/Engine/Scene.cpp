@@ -17,6 +17,10 @@ Scene::~Scene() {
 	for (unsigned int i = 0; i < m_objects.size(); i++) {
 		delete m_objects[i];
 	}
+
+	for (unsigned int i = 0; i < m_GUIElements.size(); i++) {
+		delete m_GUIElements[i];
+	}
 }
 
 int Scene::getNrOfPointLights() {
