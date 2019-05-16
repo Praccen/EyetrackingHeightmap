@@ -15,9 +15,10 @@ private:
 	glm::vec2 m_lastMousePick;
 
 	float m_timer;
+	bool m_mouse;
 
 public:
-	EyetrackingPrototype(sf::Window *originalWindow);
+	EyetrackingPrototype(sf::Window *originalWindow, bool mouse);
 	~EyetrackingPrototype();
 
 	glm::vec2 getMousePos();

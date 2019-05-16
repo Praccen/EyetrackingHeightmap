@@ -54,19 +54,27 @@ int main()
 	//Eyetracking initialization
 	tobii_api_t* api;
 	tobii_error_t error = tobii_api_create(&api, NULL, NULL);
-	assert(error == TOBII_ERROR_NO_ERROR);
+	tobii_device_t* device;
+	bool mouse = false;
+	//assert(error == TOBII_ERROR_NO_ERROR);
 
 	char url[256] = { 0 };
 	error = tobii_enumerate_local_device_urls(api, url_receiver, url);
-	assert(error == TOBII_ERROR_NO_ERROR && *url != '\0');
+	if (error == TOBII_ERROR_NO_ERROR) {
+		//assert(error == TOBII_ERROR_NO_ERROR && *url != '\0');
 
-	tobii_device_t* device;
-	error = tobii_device_create(api, url, &device);
-	assert(error == TOBII_ERROR_NO_ERROR);
 
-	error = tobii_gaze_point_subscribe(device, gaze_point_callback, 0);
-	assert(error == TOBII_ERROR_NO_ERROR);
+		error = tobii_device_create(api, url, &device);
+		//assert(error == TOBII_ERROR_NO_ERROR);
+		if(error == TOBII_ERROR_NO_ERROR)
+			error = tobii_gaze_point_subscribe(device, gaze_point_callback, 0);
+	}
+	//assert(error == TOBII_ERROR_NO_ERROR);
 	//--------------------------
+	if (error != TOBII_ERROR_NO_ERROR) {
+		mouse = true;
+	}
+
 
 	//OpenGL settings
 	sf::ContextSettings openGLSettings;
@@ -99,7 +107,7 @@ int main()
 
 
 	//Only create the game you want to run
-	EyetrackingPrototype game(&window);
+	EyetrackingPrototype game(&window, mouse);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -151,11 +159,17 @@ int main()
 			}
 
 			//Eyetracking
-			error = tobii_wait_for_callbacks(NULL, 1, &device);
-			assert(error == TOBII_ERROR_NO_ERROR || error == TOBII_ERROR_TIMED_OUT);
+			if (!mouse) {
+				error = tobii_wait_for_callbacks(NULL, 1, &device);
+				assert(error == TOBII_ERROR_NO_ERROR || error == TOBII_ERROR_TIMED_OUT);
 
-			error = tobii_device_process_callbacks(device);
-			assert(error == TOBII_ERROR_NO_ERROR);
+				error = tobii_device_process_callbacks(device);
+				assert(error == TOBII_ERROR_NO_ERROR);
+			}
+			else {
+				g_eyePos.x = sf::Mouse::getPosition(window).x;
+				g_eyePos.y = sf::Mouse::getPosition(window).y;
+			}
 
 			game.setEyePos(g_eyePos);
 			//-----------
@@ -168,11 +182,17 @@ int main()
 
 		if (maxCounter == 0) {
 			//Eyetracking
-			error = tobii_wait_for_callbacks(NULL, 1, &device);
-			assert(error == TOBII_ERROR_NO_ERROR || error == TOBII_ERROR_TIMED_OUT);
+			if (!mouse) {
+				error = tobii_wait_for_callbacks(NULL, 1, &device);
+				assert(error == TOBII_ERROR_NO_ERROR || error == TOBII_ERROR_TIMED_OUT);
 
-			error = tobii_device_process_callbacks(device);
-			assert(error == TOBII_ERROR_NO_ERROR);
+				error = tobii_device_process_callbacks(device);
+				assert(error == TOBII_ERROR_NO_ERROR);
+			}
+			else {
+				g_eyePos.x = sf::Mouse::getPosition(window).x;
+				g_eyePos.y = sf::Mouse::getPosition(window).y;
+			}
 
 			game.setEyePos(g_eyePos);
 			//-----------
@@ -193,14 +213,16 @@ int main()
 	//Release resource
 
 	//Eyetracking destroy
-	error = tobii_gaze_point_unsubscribe(device);
-	assert(error == TOBII_ERROR_NO_ERROR);
+	if (!mouse) {
+		error = tobii_gaze_point_unsubscribe(device);
+		assert(error == TOBII_ERROR_NO_ERROR);
 
-	error = tobii_device_destroy(device);
-	assert(error == TOBII_ERROR_NO_ERROR);
+		error = tobii_device_destroy(device);
+		assert(error == TOBII_ERROR_NO_ERROR);
 
-	error = tobii_api_destroy(api);
-	assert(error == TOBII_ERROR_NO_ERROR);
+		error = tobii_api_destroy(api);
+		assert(error == TOBII_ERROR_NO_ERROR);
+	}
 
 	return 0;
 }
