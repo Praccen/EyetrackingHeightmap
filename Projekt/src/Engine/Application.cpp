@@ -27,7 +27,7 @@ Object* Application::getNewObject() {
 	return m_scene.addObject();
 }
 
-GUIElement* Application::getNewUIElement() {
+GUIElement* Application::getNewGUIElement() {
 	return m_scene.addGUIElement();
 }
 

@@ -11,13 +11,21 @@ private:
 	Heightmap* m_heightmap;
 	sf::Window* m_window;
 
-	GUIElement* m_testGUIElement;
+	GUIElement* m_material;
+	GUIElement* m_tool;
+	GUIElement* m_materialMenu;
+	GUIElement* m_toolMenu;
 
 	glm::vec2 m_eyePos;
 	glm::vec2 m_lastMousePick;
+	glm::vec2 m_lastValidPos;
 
 	float m_timer;
+	float m_precisionTimer;
 	bool m_mouse;
+	bool m_menuShow = false;
+	bool m_toolShow = false;
+	bool m_precisionAdjustment;
 
 public:
 	EyetrackingPrototype(sf::Window *originalWindow, bool mouse);

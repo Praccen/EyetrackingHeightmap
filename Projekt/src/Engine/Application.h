@@ -21,7 +21,7 @@ public:
 	virtual ~Application();
 
 	static Object* getNewObject();
-	static GUIElement* getNewUIElement();
+	static GUIElement* getNewGUIElement();
 	static Camera* getCamera();
 	static DirectionalLight* getDirectionalLight();
 

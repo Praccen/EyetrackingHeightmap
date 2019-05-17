@@ -21,6 +21,7 @@ private:
 	DirectionalLight m_directionalLight;
 
 	int m_nrOfPointLights;
+	bool m_removeGUIElement = false;
 
 	//Geometry shader locations
 	GLint m_projLoc, m_viewLoc, m_geometryCameraPosLoc;
