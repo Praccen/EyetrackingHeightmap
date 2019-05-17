@@ -132,21 +132,27 @@ void EyetrackingPrototype::menuInteraction() {
 		x_cursor = m_eyePos.x * 2 - 1;
 		y_cursor = (m_eyePos.y * 2 - 1) * -1;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::B)) {
-		std::cout << "X: " << x_cursor << "  Y: " << y_cursor << "Mousepos: " << sf::Mouse::getPosition(*m_window).x << std::endl;
-	}
 
+	// Interact w/ Materials
 	if (x_cursor > -0.9 && x_cursor < -0.5 && y_cursor > -0.9 && y_cursor < -0.5) {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M)) {
-			// Interact w/ Materials
-			std::cout << "Nice" << std::endl;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M) && m_menuShow == false && m_toolShow == false) {
+			m_materialMenu->setSize(glm::vec2(1.9, 1.9));
+			m_menuShow = true;
 		}
 	}
+	// Interact w/ Tools
 	if (x_cursor > 0.5 && x_cursor < 0.9 && y_cursor > -0.9 && y_cursor < -0.5) {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M)) {
-			// Interact w/ Tools
-			std::cout << "Bice" << std::endl;
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M) && m_menuShow == false && m_toolShow == false) {
+			m_toolMenu->setSize(glm::vec2(1.9, 1.9));
+			m_toolShow = true;
 		}
+	}
+	// Close menus
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N) && (m_menuShow == true || m_toolShow == true)) {
+		m_menuShow = false;
+		m_materialMenu->setSize(glm::vec2(0.0, 0.0));
+		m_toolShow = false;
+		m_toolMenu->setSize(glm::vec2(0.0, 0.0));
 	}
 }
 
@@ -171,23 +177,23 @@ void EyetrackingPrototype::update(float dt) {
 		m_precisionAdjustment = false;
 		m_precisionTimer = 0.0f;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M) && m_menuShow == false && m_toolShow == false) {
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M) && m_menuShow == false && m_toolShow == false) {
 		m_materialMenu->setSize(glm::vec2(1.9, 1.9));
 		m_menuShow = true;
-	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::B) && m_toolShow == false && m_menuShow == false) {
+	}*/
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::B) && m_toolShow == false && m_menuShow == false) {
 		m_toolMenu->setSize(glm::vec2(1.9, 1.9));
 		m_toolShow = true;
-	}
+	}*/
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N) && m_menuShow == true) {
+	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N) && m_menuShow == true) {
 		m_materialMenu->setSize(glm::vec2(0.0, 0.0));
 		m_menuShow = false;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N) && m_toolShow == true) {
 		m_toolMenu->setSize(glm::vec2(0.0, 0.0));
 		m_toolShow = false;
-	}
+	}*/
 	
 	if (!m_precisionAdjustment) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1)) {
