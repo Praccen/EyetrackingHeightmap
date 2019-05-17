@@ -101,6 +101,36 @@ void EyetrackingPrototype::setEyePos(glm::vec2 eyePos) {
 	m_eyePos = eyePos;
 }
 
+void EyetrackingPrototype::menuInteraction() {
+	float x_cursor;
+	float y_cursor;
+
+	if (m_mouse) {
+		x_cursor = ((float)sf::Mouse::getPosition(*m_window).x / (float)m_window->getSize().x) * 2.f - 1.f;
+		y_cursor = (((float)sf::Mouse::getPosition(*m_window).y / (float)m_window->getSize().y) * 2.f - 1.f) * -1;
+	}
+	else {
+		x_cursor = m_eyePos.x * 2 - 1;
+		y_cursor = (m_eyePos.y * 2 - 1) * -1;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::B)) {
+		std::cout << "X: " << x_cursor << "  Y: " << y_cursor << "Mousepos: " << sf::Mouse::getPosition(*m_window).x << std::endl;
+	}
+
+	if (x_cursor > -0.9 && x_cursor < -0.5 && y_cursor > -0.9 && y_cursor < -0.5) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M)) {
+			// Interact w/ Materials
+			std::cout << "Nice" << std::endl;
+		}
+	}
+	if (x_cursor > 0.5 && x_cursor < 0.9 && y_cursor > -0.9 && y_cursor < -0.5) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M)) {
+			// Interact w/ Tools
+			std::cout << "Bice" << std::endl;
+		}
+	}
+}
+
 void EyetrackingPrototype::update(float dt) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X)) {
 		std::cout << getMousePos().x << ", " << getMousePos().y << std::endl;
@@ -149,6 +179,7 @@ void EyetrackingPrototype::update(float dt) {
 		}
 	}
 
+	menuInteraction();
 	controlCamera(dt);
 
 	if (!m_mouse) {

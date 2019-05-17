@@ -29,5 +29,7 @@ public:
 
 	void setEyePos(glm::vec2 eyePos);
 
+	void menuInteraction();
+
 	void update(float dt);
 };
