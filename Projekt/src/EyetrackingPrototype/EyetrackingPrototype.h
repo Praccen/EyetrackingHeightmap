@@ -13,6 +13,7 @@ private:
 
 	GUIElement* m_material;
 	GUIElement* m_tool;
+	GUIElement* m_tooltip;
 	GUIElement* m_materialMenu;
 	GUIElement* m_toolMenu;
 

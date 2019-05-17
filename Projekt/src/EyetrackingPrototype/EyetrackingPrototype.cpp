@@ -31,6 +31,11 @@ EyetrackingPrototype::EyetrackingPrototype(sf::Window * originalWindow, bool mou
 	m_tool->setTexture("res/Textures/Tool.png");
 	m_tool->setPosition(glm::vec2(0.5, -0.9));
 	m_tool->setSize(glm::vec2(0.4, 0.4));
+	
+	m_tooltip = Application::getNewGUIElement();
+	m_tooltip->setTexture("res/Textures/tooltip.png");
+	m_tooltip->setPosition(glm::vec2(-0.28, 0.7));
+	m_tooltip->setSize(glm::vec2(0.5, 0.2));
 
 	m_materialMenu = Application::getNewGUIElement();
 	m_materialMenu->setTexture("res/Textures/materialMenu.png");
