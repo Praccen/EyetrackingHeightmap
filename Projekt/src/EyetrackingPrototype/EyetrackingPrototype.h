@@ -13,9 +13,13 @@ private:
 
 	glm::vec2 m_eyePos;
 	glm::vec2 m_lastMousePick;
+	glm::vec2 m_lastValidPos;
 
 	float m_timer;
+	float m_precisionTimer;
 	bool m_mouse;
+	bool m_precisionAdjustment;
+	bool testis;
 
 public:
 	EyetrackingPrototype(sf::Window *originalWindow, bool mouse);
