@@ -139,8 +139,6 @@ void EyetrackingPrototype::update(float dt) {
 		m_toolShow = false;
 	}
 	
-	
-
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1)) {
 		glm::vec2 tempMousePos = getMousePos();
 		if (tempMousePos.x != -1 && tempMousePos.y != -1) {
