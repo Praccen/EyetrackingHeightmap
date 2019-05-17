@@ -22,22 +22,22 @@ EyetrackingPrototype::EyetrackingPrototype(sf::Window * originalWindow, bool mou
 	m_window = originalWindow;
 
 	/*-------------------------MENU---------------------------*/
-	m_material = Application::getNewUIElement();
+	m_material = Application::getNewGUIElement();
 	m_material->setTexture("res/Textures/Material.png");
 	m_material->setPosition(glm::vec2(-0.9, -0.9));
 	m_material->setSize(glm::vec2(0.4, 0.4));
 
-	m_tool = Application::getNewUIElement();
+	m_tool = Application::getNewGUIElement();
 	m_tool->setTexture("res/Textures/Tool.png");
 	m_tool->setPosition(glm::vec2(0.5, -0.9));
 	m_tool->setSize(glm::vec2(0.4, 0.4));
 
-	m_materialMenu = Application::getNewUIElement();
+	m_materialMenu = Application::getNewGUIElement();
 	m_materialMenu->setTexture("res/Textures/materialMenu.png");
 	m_materialMenu->setPosition(glm::vec2(-0.95, -0.95));
 	m_materialMenu->setSize(glm::vec2(0.0, 0.0));
 
-	m_toolMenu = Application::getNewUIElement();
+	m_toolMenu = Application::getNewGUIElement();
 	m_toolMenu->setTexture("res/Textures/toolMenu.png");
 	m_toolMenu->setPosition(glm::vec2(-0.95, -0.95));
 	m_toolMenu->setSize(glm::vec2(0.0, 0.0));
