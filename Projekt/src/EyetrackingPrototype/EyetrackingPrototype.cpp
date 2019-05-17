@@ -21,11 +21,27 @@ EyetrackingPrototype::EyetrackingPrototype(sf::Window * originalWindow, bool mou
 
 	m_window = originalWindow;
 
-	m_testGUIElement = Application::getNewUIElement();
-	m_testGUIElement->setTexture("res/Textures/Material.png");
-	m_testGUIElement->setPosition(glm::vec2(-0.9, -0.9));
-	m_testGUIElement->setSize(glm::vec2(0.4, 0.4));
+	/*-------------------------MENU---------------------------*/
+	m_material = Application::getNewUIElement();
+	m_material->setTexture("res/Textures/Material.png");
+	m_material->setPosition(glm::vec2(-0.9, -0.9));
+	m_material->setSize(glm::vec2(0.4, 0.4));
 
+	m_tool = Application::getNewUIElement();
+	m_tool->setTexture("res/Textures/Tool.png");
+	m_tool->setPosition(glm::vec2(0.5, -0.9));
+	m_tool->setSize(glm::vec2(0.4, 0.4));
+
+	m_materialMenu = Application::getNewUIElement();
+	m_materialMenu->setTexture("res/Textures/materialMenu.png");
+	m_materialMenu->setPosition(glm::vec2(-0.95, -0.95));
+	m_materialMenu->setSize(glm::vec2(0.0, 0.0));
+
+	m_toolMenu = Application::getNewUIElement();
+	m_toolMenu->setTexture("res/Textures/toolMenu.png");
+	m_toolMenu->setPosition(glm::vec2(-0.95, -0.95));
+	m_toolMenu->setSize(glm::vec2(0.0, 0.0));
+	/*-------------------------MENU---------------------------*/
 	
 	m_mouse = mouse;
 	m_timer = 1.0f;
@@ -105,6 +121,25 @@ void EyetrackingPrototype::update(float dt) {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::X)) {
 		std::cout << getMousePos().x << ", " << getMousePos().y << std::endl;
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M) && m_menuShow == false && m_toolShow == false) {
+		m_materialMenu->setSize(glm::vec2(1.9, 1.9));
+		m_menuShow = true;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::B) && m_toolShow == false && m_menuShow == false) {
+		m_toolMenu->setSize(glm::vec2(1.9, 1.9));
+		m_toolShow = true;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N) && m_menuShow == true) {
+		m_materialMenu->setSize(glm::vec2(0.0, 0.0));
+		m_menuShow = false;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N) && m_toolShow == true) {
+		m_toolMenu->setSize(glm::vec2(0.0, 0.0));
+		m_toolShow = false;
+	}
+	
+	
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1)) {
 		glm::vec2 tempMousePos = getMousePos();
