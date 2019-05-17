@@ -177,28 +177,10 @@ void EyetrackingPrototype::update(float dt) {
 		m_precisionAdjustment = false;
 		m_precisionTimer = 0.0f;
 	}
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M) && m_menuShow == false && m_toolShow == false) {
-		m_materialMenu->setSize(glm::vec2(1.9, 1.9));
-		m_menuShow = true;
-	}*/
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::B) && m_toolShow == false && m_menuShow == false) {
-		m_toolMenu->setSize(glm::vec2(1.9, 1.9));
-		m_toolShow = true;
-	}*/
-
-	/*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N) && m_menuShow == true) {
-		m_materialMenu->setSize(glm::vec2(0.0, 0.0));
-		m_menuShow = false;
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N) && m_toolShow == true) {
-		m_toolMenu->setSize(glm::vec2(0.0, 0.0));
-		m_toolShow = false;
-	}*/
-	
+	menuInteraction();
 	if (!m_precisionAdjustment) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Num1)) {
 			if (tempMousePos.x != -1 && tempMousePos.y != -1) {
-
 				m_heightmap->paintGround(tempMousePos, 1, 2);
 			}
 		}
@@ -234,7 +216,7 @@ void EyetrackingPrototype::update(float dt) {
 		}
 	}
 
-	menuInteraction();
+
 	controlCamera(dt);
 
 	if (!m_mouse) {
