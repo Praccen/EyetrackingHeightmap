@@ -49,7 +49,6 @@ EyetrackingPrototype::EyetrackingPrototype(sf::Window * originalWindow, bool mou
 	m_lastMousePick = glm::vec2(0.0f, 0.0f);
 
 	m_precisionAdjustment = false;
-	testis = false;
 }
 
 EyetrackingPrototype::~EyetrackingPrototype() {
