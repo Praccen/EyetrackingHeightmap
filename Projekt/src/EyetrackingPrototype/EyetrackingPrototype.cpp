@@ -20,6 +20,28 @@ EyetrackingPrototype::EyetrackingPrototype(sf::Window * originalWindow, bool mou
 	m_heightmap = new Heightmap();
 
 	m_window = originalWindow;
+
+	/*-------------------------MENU---------------------------*/
+	m_material = Application::getNewGUIElement();
+	m_material->setTexture("res/Textures/Material.png");
+	m_material->setPosition(glm::vec2(-0.9, -0.9));
+	m_material->setSize(glm::vec2(0.4, 0.4));
+
+	m_tool = Application::getNewGUIElement();
+	m_tool->setTexture("res/Textures/Tool.png");
+	m_tool->setPosition(glm::vec2(0.5, -0.9));
+	m_tool->setSize(glm::vec2(0.4, 0.4));
+
+	m_materialMenu = Application::getNewGUIElement();
+	m_materialMenu->setTexture("res/Textures/materialMenu.png");
+	m_materialMenu->setPosition(glm::vec2(-0.95, -0.95));
+	m_materialMenu->setSize(glm::vec2(0.0, 0.0));
+
+	m_toolMenu = Application::getNewGUIElement();
+	m_toolMenu->setTexture("res/Textures/toolMenu.png");
+	m_toolMenu->setPosition(glm::vec2(-0.95, -0.95));
+	m_toolMenu->setSize(glm::vec2(0.0, 0.0));
+	/*-------------------------MENU---------------------------*/
 	
 	m_mouse = mouse;
 	m_timer = 1.0f;
@@ -121,6 +143,23 @@ void EyetrackingPrototype::update(float dt) {
 	if (m_precisionTimer > 0.6f || glm::length((m_lastValidPos - tempMousePos)) < 5.0f) {
 		m_precisionAdjustment = false;
 		m_precisionTimer = 0.0f;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M) && m_menuShow == false && m_toolShow == false) {
+		m_materialMenu->setSize(glm::vec2(1.9, 1.9));
+		m_menuShow = true;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::B) && m_toolShow == false && m_menuShow == false) {
+		m_toolMenu->setSize(glm::vec2(1.9, 1.9));
+		m_toolShow = true;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N) && m_menuShow == true) {
+		m_materialMenu->setSize(glm::vec2(0.0, 0.0));
+		m_menuShow = false;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::N) && m_toolShow == true) {
+		m_toolMenu->setSize(glm::vec2(0.0, 0.0));
+		m_toolShow = false;
 	}
 	
 	if (!m_precisionAdjustment) {

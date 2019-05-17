@@ -17,6 +17,10 @@ Scene::~Scene() {
 	for (unsigned int i = 0; i < m_objects.size(); i++) {
 		delete m_objects[i];
 	}
+
+	for (unsigned int i = 0; i < m_GUIElements.size(); i++) {
+		delete m_GUIElements[i];
+	}
 }
 
 int Scene::getNrOfPointLights() {
@@ -27,6 +31,12 @@ Object* Scene::addObject() {
 	Object* object = new Object(&m_modelHandler);
 	m_objects.push_back(object);
 	return object;
+}
+
+GUIElement* Scene::addGUIElement() {
+	GUIElement* element = new GUIElement();
+	m_GUIElements.push_back(element);
+	return element;
 }
 
 Camera* Scene::getCamera() {
@@ -80,8 +90,14 @@ void Scene::update(float dt) {
 	m_camera.update();
 }
 
-void Scene::draw(GLuint shaderProgram) {
+void Scene::draw3D(GLuint shaderProgram) {
 	for (unsigned int i = 0; i < m_objects.size(); i++) {
 		m_objects[i]->draw(shaderProgram);
+	}
+}
+
+void Scene::drawGUI(GLuint shaderProgram) {
+	for (unsigned int i = 0; i < m_GUIElements.size(); i++) {
+		m_GUIElements[i]->draw(shaderProgram);
 	}
 }

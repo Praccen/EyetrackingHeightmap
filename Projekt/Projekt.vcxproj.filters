@@ -81,6 +81,12 @@
     <ClCompile Include="src\EyetrackingPrototype\Heightmap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Engine\Graphics\Renderers\GUIRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Graphics\Geometry\GUI Element\GUIElement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\engine\Graphics\Camera\Camera.h">
@@ -140,6 +146,12 @@
     <ClInclude Include="src\EyetrackingPrototype\Heightmap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\Renderers\GUIRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Graphics\Geometry\GUI Element\GUIElement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -152,5 +164,6 @@
     <None Include="Tobii\API-Reference.pdf">
       <Filter>Tobii</Filter>
     </None>
+    <None Include="@(NativeLibs)" />
   </ItemGroup>
 </Project>

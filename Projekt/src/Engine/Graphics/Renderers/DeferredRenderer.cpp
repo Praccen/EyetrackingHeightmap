@@ -131,6 +131,7 @@ void DeferredRenderer::createShadowBuffer() {
 }
 
 void DeferredRenderer::draw() {
+	glDisable(GL_DEPTH_TEST);
 	setGeometryPass();
 	setShadowPass();
 	setLightPass();
@@ -139,7 +140,7 @@ void DeferredRenderer::draw() {
 
 void DeferredRenderer::renderScene(GLuint shaderProgram) {
 	//Draw the scene
-	m_scene->draw(shaderProgram);
+	m_scene->draw3D(shaderProgram);
 }
 
 void DeferredRenderer::setGeometryPass() {

@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Engine\Application.cpp" />
     <ClCompile Include="src\engine\Graphics\Camera\Camera.cpp" />
+    <ClCompile Include="src\Engine\Graphics\Geometry\GUI Element\GUIElement.cpp" />
     <ClCompile Include="src\Engine\Graphics\Geometry\Model loading\ModelHandler.cpp" />
     <ClCompile Include="src\Engine\Graphics\Geometry\Predefined structures\MeshBuilder.cpp" />
     <ClCompile Include="src\Engine\Graphics\Geometry\Predefined structures\Plane.cpp" />
@@ -28,6 +29,7 @@
     <ClCompile Include="src\engine\Graphics\Camera\Frustum.cpp" />
     <ClCompile Include="src\engine\Graphics\Renderers\DeferredRenderer.cpp" />
     <ClCompile Include="src\Engine\Content\Object.cpp" />
+    <ClCompile Include="src\Engine\Graphics\Renderers\GUIRenderer.cpp" />
     <ClCompile Include="src\Engine\Physics\BoundingBox.cpp" />
     <ClCompile Include="src\Engine\Physics\Intersections.cpp" />
     <ClCompile Include="src\Engine\Scene.cpp" />
@@ -43,6 +45,7 @@
   <ItemGroup>
     <ClInclude Include="src\Engine\Application.h" />
     <ClInclude Include="src\engine\Graphics\Camera\Camera.h" />
+    <ClInclude Include="src\Engine\Graphics\Geometry\GUI Element\GUIElement.h" />
     <ClInclude Include="src\Engine\Graphics\Geometry\Model loading\ModelHandler.h" />
     <ClInclude Include="src\Engine\Graphics\Geometry\Predefined structures\MeshBuilder.h" />
     <ClInclude Include="src\Engine\Graphics\Geometry\Predefined structures\Plane.h" />
@@ -53,6 +56,7 @@
     <ClInclude Include="src\engine\Graphics\Geometry\Model loading\Model.h" />
     <ClInclude Include="src\engine\Graphics\Lighting\PointLight.h" />
     <ClInclude Include="src\engine\Graphics\Geometry\Quadtree.h" />
+    <ClInclude Include="src\Engine\Graphics\Renderers\GUIRenderer.h" />
     <ClInclude Include="src\engine\Graphics\Shader compilation\ShaderSet.h" />
     <ClInclude Include="src\Engine\Content\Object.h" />
     <ClInclude Include="src\Engine\Physics\BoundingBox.h" />
